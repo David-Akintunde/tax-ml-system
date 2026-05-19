@@ -2,7 +2,6 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// Use environment variable for API base URL, fallback to localhost for development
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 interface User {
@@ -28,15 +27,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('access_token');
-    if (storedToken) {
-      setToken(storedToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-      fetchUser();
-    }
-  }, []);
-
   const fetchUser = async () => {
     try {
       const res = await axios.get(`${API_BASE_URL}/auth/me`);
@@ -47,6 +37,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       logout();
     }
   };
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('access_token');
+    if (storedToken) {
+      setToken(storedToken);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+      fetchUser();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // fetchUser is intentionally not a dependency; we only want this to run once on mount
 
   const login = async (email: string, password: string) => {
     try {
