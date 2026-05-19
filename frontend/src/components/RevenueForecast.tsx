@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { downloadCSV } from '../utils/exportCSV';
 import AnimatedPage from './AnimatedPage';
+import API_BASE_URL from '../api/config';
 
 const RevenueForecast = () => {
   const [months, setMonths] = useState(new Array(12).fill(1000000));
@@ -19,14 +20,14 @@ const RevenueForecast = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/predict/forecast', {
+      const response = await axios.post(`${API_BASE_URL}/predict/forecast`, {
         last_12_months: months,
       });
       setForecast(response.data.forecast);
       toast.success('Forecast generated.');
     } catch (error) {
       console.error(error);
-      toast.error('Error calling API. Ensure backend is running on port 5000.');
+      toast.error('Error calling API. Ensure backend is running.');
     }
     setLoading(false);
   };

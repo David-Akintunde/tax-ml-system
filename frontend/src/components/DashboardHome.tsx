@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, 
 import axios from 'axios';
 import { TrendingUp, AlertTriangle, Users, DollarSign } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../api/config';
 
 const DashboardHome = () => {
   const { user } = useAuth();
@@ -37,7 +38,7 @@ const DashboardHome = () => {
         const highRiskCount = Math.round(50000 * 0.15);
         const avgAnomaly = 0.28;
         const last12 = monthly.map(m => m.revenue);
-        const forecastRes = await axios.post('http://localhost:5000/predict/forecast', { last_12_months: last12 });
+        const forecastRes = await axios.post(`${API_BASE_URL}/predict/forecast`, { last_12_months: last12 });
         const nextForecast = forecastRes.data.forecast;
         
         const riskDist = [
@@ -65,7 +66,7 @@ const DashboardHome = () => {
 
   const COLORS = ['#10b981', '#f59e0b', '#ef4444'];
 
-  if (loading) return <div className="flex justify-center items-center h-64">Loading dashboard data...</div>;
+  if (loading) return <div className="flex justify-center items-center h-64"><div className="animate-pulse text-gray-500">Loading dashboard data...</div></div>;
 
   const greetingName = user?.first_name || 'Officer';
 

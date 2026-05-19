@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { downloadCSV } from '../utils/exportCSV';
 import AnimatedPage from './AnimatedPage';
+import API_BASE_URL from '../api/config';
 
 const RiskAssessment = () => {
   const [formData, setFormData] = useState({
@@ -32,12 +33,12 @@ const RiskAssessment = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/predict/risk', formData);
+      const response = await axios.post(`${API_BASE_URL}/predict/risk`, formData);
       setResult(response.data.risk_score);
       toast.success('Risk prediction completed.');
     } catch (error) {
       console.error(error);
-      toast.error('Error calling API. Ensure backend is running on port 5000.');
+      toast.error('Error calling API. Ensure backend is running.');
     }
     setLoading(false);
   };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import API_BASE_URL from '../api/config';
 
 const Profile = () => {
   const { token, fetchUser } = useAuth();
@@ -19,7 +20,7 @@ const Profile = () => {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/auth/me', {
+        const res = await axios.get(`${API_BASE_URL}/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProfile(res.data);
@@ -34,14 +35,14 @@ const Profile = () => {
     e.preventDefault();
     setUpdating(true);
     try {
-      await axios.post('http://localhost:5000/auth/change-password',
+      await axios.post(`${API_BASE_URL}/auth/change-password`,
         { current_password: currentPassword, new_password: newPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success('Password updated');
       setCurrentPassword('');
       setNewPassword('');
-      await fetchUser(); // refresh user context
+      await fetchUser();
     } catch (err: any) {
       toast.error(err.response?.data?.detail || 'Update failed');
     }
