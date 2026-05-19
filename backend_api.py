@@ -163,9 +163,14 @@ else:
 # ---------- FastAPI App ----------
 app = FastAPI(title="Tax Management ML API with Auth")
 
+# Update CORS to allow both localhost and Vercel frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://tax-ml-system.vercel.app",   # your Vercel frontend URL
+        "https://tax-ml-system.vercel.app"    # add your custom domain if any
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
