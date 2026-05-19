@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 *.db
 tax_users.db
-ml-training/models/
+# ml-training/models/  
 ml-training/*.csv
 frontend/node_modules/
 frontend/build/
