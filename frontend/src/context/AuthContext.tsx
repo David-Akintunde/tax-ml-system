@@ -2,6 +2,9 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+// Use environment variable for API base URL, fallback to localhost for development
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 interface User {
   first_name: string;
   last_name: string;
@@ -30,13 +33,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (storedToken) {
       setToken(storedToken);
       axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-      fetchUser(); // fetch user info if token exists
+      fetchUser();
     }
   }, []);
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/auth/me');
+      const res = await axios.get(`${API_BASE_URL}/auth/me`);
       setUser(res.data);
       localStorage.setItem('user', JSON.stringify(res.data));
     } catch (err) {
@@ -47,7 +50,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', { email, password });
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
       const { access_token } = response.data;
       localStorage.setItem('access_token', access_token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
@@ -63,7 +66,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const register = async (first_name: string, last_name: string, staff_id: string, email: string, password: string) => {
     try {
-      await axios.post('http://localhost:5000/auth/register', { first_name, last_name, staff_id, email, password });
+      await axios.post(`${API_BASE_URL}/auth/register`, { first_name, last_name, staff_id, email, password });
       toast.success('Registration successful! Please login.');
       return true;
     } catch (error: any) {
