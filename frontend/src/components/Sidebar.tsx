@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   return (
     <div className="w-64 bg-blue-900 text-white flex flex-col">
-      <div className="p-4 text-2xl font-bold border-b border-blue-800">FIRS Analytics</div>
+      <div className="p-4 text-2xl font-bold border-b border-blue-800">FIRSTaxPortal</div>
       <nav className="flex-1 mt-6">
         <NavLink
           to="/dashboard"
