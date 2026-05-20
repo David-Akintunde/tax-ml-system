@@ -99,14 +99,14 @@ const DashboardHome = () => {
           </div>
         </div>
         <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
-          <div className="flex items-center gap-4">
-            <TrendingUp className="text-yellow-600" size={32} />
-            <div>
-              <p className="text-gray-500 text-sm">Avg. Anomaly Score</p>
-              <p className="text-2xl font-bold">{stats.avgAnomaly.toFixed(2)}</p>
-            </div>
-          </div>
-        </div>
+  <div className="flex items-center gap-4">
+    <span className="text-green-600 text-3xl font-bold">₦</span>
+    <div>
+      <p className="text-gray-500 text-sm">Next Month Forecast</p>
+      <p className="text-2xl font-bold">₦{stats.nextMonthForecast?.toLocaleString()}</p>
+    </div>
+  </div>
+</div>
         <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
           <div className="flex items-center gap-4">
             <DollarSign className="text-green-600" size={32} />
