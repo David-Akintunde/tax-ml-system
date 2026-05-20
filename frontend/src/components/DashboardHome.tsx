@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import axios from 'axios';
-import { TrendingUp, AlertTriangle, Users, DollarSign } from 'lucide-react';
+import { TrendingUp, AlertTriangle, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import API_BASE_URL from '../api/config';
 
@@ -78,7 +78,7 @@ const DashboardHome = () => {
         <p className="text-blue-100 mt-1">Welcome back to FIRS Tax Analytics Dashboard</p>
       </div>
 
-      {/* KPI Cards with hover effects */}
+      {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
           <div className="flex items-center gap-4">
@@ -99,17 +99,17 @@ const DashboardHome = () => {
           </div>
         </div>
         <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
-  <div className="flex items-center gap-4">
-    <span className="text-green-600 text-3xl font-bold">₦</span>
-    <div>
-      <p className="text-gray-500 text-sm">Next Month Forecast</p>
-      <p className="text-2xl font-bold">₦{stats.nextMonthForecast?.toLocaleString()}</p>
-    </div>
-  </div>
-</div>
+          <div className="flex items-center gap-4">
+            <TrendingUp className="text-yellow-600" size={32} />
+            <div>
+              <p className="text-gray-500 text-sm">Avg. Anomaly Score</p>
+              <p className="text-2xl font-bold">{stats.avgAnomaly.toFixed(2)}</p>
+            </div>
+          </div>
+        </div>
         <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
           <div className="flex items-center gap-4">
-            <DollarSign className="text-green-600" size={32} />
+            <span className="text-green-600 text-3xl font-bold">₦</span>
             <div>
               <p className="text-gray-500 text-sm">Next Month Forecast</p>
               <p className="text-2xl font-bold">₦{stats.nextMonthForecast?.toLocaleString()}</p>
